@@ -8,10 +8,12 @@
 #
 
 library(shiny)
+library(udpipe)
 library(magrittr)
 library(igraph)
 library(ggraph)
 library(ggplot2)
+library(plyr)
 options(shiny.maxRequestSize=30*1024^2)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -39,7 +41,7 @@ shinyServer(function(input, output) {
     y <- cooccurrence(x=subset(x,xpos %in% input$xpos),
                       term = "lemma",
                       group = c("doc_id","paragraph_id","sentence_id"))
-    wordnetwork <- y
+    wordnetwork <- head(y,100)
     wordnetwork <- igraph::graph_from_data_frame(wordnetwork)
     
     ggraph(wordnetwork, layout = "fr")+
@@ -50,6 +52,17 @@ shinyServer(function(input, output) {
       labs(title = "Co-Occurrences Plot")
   
     })
-  
+  #XPOS Frequency Plot
+  output$plot2 = renderPlot({
+    x <- as.data.frame(udpipe_annotate(Lang_Model(),x = Dataset()))
+    y <- subset(x,xpos %in% input$xpos)
+    xpos_count<-count(y$xpos)
+    barplot(xpos_count$freq
+            ,col = xpos_count$x
+            ,legend.text = xpos_count$x
+            ,args.legend = list(x="topright")
+            ,ylab = "XPOS frequencies"
+            ,ylim = c(0,100))
+  })
   
 }) 

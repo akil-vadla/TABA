@@ -43,7 +43,9 @@ shinyUI(fluidPage(
                              span(strong("Upload text data file(txt file)")),
                              'and upload the text data file. You can select different parts of speech other than the default selected values from the List of Xpos')),
                   tabPanel("Co-occurence Plot", 
-                           plotOutput('plot1'))
+                           plotOutput('plot1')),
+                  tabPanel("XPOS Frequency Plot",
+                           plotOutput('plot2'))
       )
     )
   )
