@@ -45,7 +45,9 @@ shinyUI(fluidPage(
                   tabPanel("Co-occurence Plot", 
                            plotOutput('plot1')),
                   tabPanel("XPOS Frequency Plot",
-                           plotOutput('plot2'))
+                           plotOutput('plot2')),
+                  tabPanel("Word Cloud",
+                           plotOutput('plot3'))
       )
     )
   )

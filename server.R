@@ -14,6 +14,7 @@ library(igraph)
 library(ggraph)
 library(ggplot2)
 library(plyr)
+library(wordcloud)
 options(shiny.maxRequestSize=30*1024^2)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -63,6 +64,19 @@ shinyServer(function(input, output) {
             ,args.legend = list(x="topright")
             ,ylab = "XPOS frequencies"
             ,ylim = c(0,100))
+  })
+  
+  #Word Cloud
+  output$plot3 = renderPlot({
+    x <- as.data.frame(udpipe_annotate(Lang_Model(),x = Dataset()))
+    y <- subset(x,xpos %in% input$xpos)
+    freq_data <- txt_freq(y$lemma)
+    wordcloud(words = freq_data$key,
+              freq = freq_data$freq,
+              min.freq = 2,
+              max.words = 100,
+              random.order = FALSE,
+              colors = brewer.pal(6,"Dark2"))
   })
   
 }) 
