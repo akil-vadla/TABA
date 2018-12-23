@@ -6,7 +6,12 @@
 # 
 #    http://shiny.rstudio.com/
 #
-
+#######################################
+          #Team Details#
+#Akil Baba Vadla          - 11810098
+#Pavan Kumar Reddy Banda  - 11810005
+#Ravi Kumar Musinana      - 11810064 
+#######################################
 library(shiny)
 
 # Define UI for application that identifies parts of speech in a text
